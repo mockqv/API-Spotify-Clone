@@ -1,3 +1,11 @@
+#.env files
 \.env
 
+#Node_modules
 \node_modules
+
+#Build/Dist
+\build
+
+#FirebaseConfig file
+\database/firebaseConfig.ts
