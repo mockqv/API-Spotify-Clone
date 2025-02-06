@@ -10,11 +10,11 @@ export default async function artistUpdateController(req: Request<any, {}, Artis
 
     try {
         const response = await updateArtistModel({ id, image, name });
-        res.status(200).json({
+        return res.status(200).json({
             response
         });
     } catch (err) {
-        res.status(500).json({
+        return res.status(500).json({
             error: err
         });
     };
