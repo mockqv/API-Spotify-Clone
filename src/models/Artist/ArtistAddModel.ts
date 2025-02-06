@@ -1,10 +1,6 @@
 import { collection, addDoc } from "firebase/firestore"; // Importe os métodos necessários
 import { db } from "../../../database/firebaseConfig"; // Supondo que o db já esteja configurado com getFirestore
-
-interface Artist {
-  image: string;
-  name: string;
-}
+import Artist from "../../interfaces/Artist";
 
 /**
  * A function used to insert an Artist document into the Firestore 'artists' collection
@@ -16,6 +12,7 @@ export default async function addArtistModel(artist: Artist): Promise<string> {
   try {
     // Adiciona o artista à coleção 'artists'
     const artistRef = await addDoc(collection(db, "artists"), artist);
+
     return artistRef.id;
   } catch (error) {
     console.error("Error adding artist:", error);

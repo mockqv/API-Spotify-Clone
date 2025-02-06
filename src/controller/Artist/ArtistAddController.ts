@@ -1,10 +1,6 @@
 import { Request, Response } from "express";
 import addArtistModel from "../../models/Artist/ArtistAddModel";
-
-interface Artist {
-  image: string;
-  name: string;
-}
+import Artist from "../../interfaces/Artist";
 
 /**
  * Controller for adding a new artist to the Firestore collection.
@@ -32,7 +28,6 @@ export default async function artistAddController(req: Request<{}, {}, Artist>, 
       data: response,
     });
   } catch (err) {
-
     // Respond with error
     return res.status(500).json({
       message: "Internal server error",
