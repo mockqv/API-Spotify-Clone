@@ -14,7 +14,6 @@ export default async function deleteArtistModel(id: string): Promise<void> {
 
     // Delete the document
     await deleteDoc(artistDocRef);
-
   } catch (error) {
     throw new Error("Failed to delete the artist");
   }

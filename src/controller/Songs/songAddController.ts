@@ -12,10 +12,7 @@ import { db } from "../../../database/firebaseConfig";
  * @returns { Promise<any> } - A promise that resolves to the HTTP response.
  */
 
-export default async function songAddController(
-  req: Request<{}, {}, Song>,
-  res: Response
-): Promise<any> {
+export default async function songAddController(req: Request<{}, {}, Song>, res: Response): Promise<any> {
   const content: Song = req.body;
 
   // Validate the required fields

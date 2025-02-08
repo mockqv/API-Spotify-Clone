@@ -19,7 +19,6 @@ export default async function updateArtistModel(artist: ArtistUpdate): Promise<v
       ...(artist.name && { name: artist.name }),
     });
 
-    console.log(`Artist with ID ${artist.id} updated successfully`);
   } catch (error) {
     throw new Error("Failed to update the artist");
   }

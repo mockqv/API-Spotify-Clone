@@ -15,7 +15,6 @@ export default async function addArtistModel(artist: Artist): Promise<string> {
 
     return artistRef.id;
   } catch (error) {
-    console.error("Error adding artist:", error);
     throw new Error("Failed to add the artist");
   };
 };

@@ -20,10 +20,8 @@ export default async function getArtistsModel(): Promise<Artist[]> {
       ...doc.data(), // Spread the document data
     } as Artist));
 
-    console.log("Artists fetched successfully:", artists);
     return artists;
   } catch (error) {
-    console.error("Error fetching artists:", error);
     throw new Error("Failed to fetch artists");
   }
 }

@@ -16,7 +16,6 @@ export default async function songAddModel(songs: Song): Promise<string> {
 
     return songsRef.id;
   } catch (error) {
-    console.error("Error adding song:", error);
     throw new Error("Failed to add the song");
   };
 };
