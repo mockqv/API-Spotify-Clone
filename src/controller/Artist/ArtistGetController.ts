@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Artist from "../../interfaces/Artist";
+import Artist from "../../interfaces/Artist/Artist";
 import getArtistsModel from "../../models/Artist/ArtistGetModel";
 
 

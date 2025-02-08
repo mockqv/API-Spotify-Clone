@@ -1,6 +1,6 @@
 import { db } from "../../../database/firebaseConfig";
 import { doc, updateDoc } from "firebase/firestore";
-import ArtistUpdate from "../../interfaces/ArtistUpdate";
+import ArtistUpdate from "../../interfaces/Artist/ArtistUpdate";
 
 /**
  * A function to update an artist document in the Firestore 'artists' collection.

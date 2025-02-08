@@ -1,6 +1,6 @@
 import { db } from "../../../database/firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
-import Artist from "../../interfaces/Artist";
+import Artist from "../../interfaces/Artist/Artist";
 
 /**
  * A function to fetch all artist documents from the Firestore 'artists' collection.

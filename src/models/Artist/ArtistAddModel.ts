@@ -1,6 +1,6 @@
-import { collection, addDoc } from "firebase/firestore"; // Importe os métodos necessários
-import { db } from "../../../database/firebaseConfig"; // Supondo que o db já esteja configurado com getFirestore
-import Artist from "../../interfaces/Artist";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../../database/firebaseConfig";
+import Artist from "../../interfaces/Artist/Artist";
 
 /**
  * A function used to insert an Artist document into the Firestore 'artists' collection

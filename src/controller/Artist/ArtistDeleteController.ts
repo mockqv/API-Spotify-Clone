@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Artist from "../../interfaces/Artist";
+import Artist from "../../interfaces/Artist/Artist";
 import deleteArtistModel from "../../models/Artist/ArtistRemoveModel";
 
 export default async function artistDeleteController(req: Request<any, {}, Artist>, res: Response): Promise<any> {

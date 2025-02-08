@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import addArtistModel from "../../models/Artist/ArtistAddModel";
-import Artist from "../../interfaces/Artist";
+import Artist from "../../interfaces/Artist/Artist";
 
 /**
  * Controller for adding a new artist to the Firestore collection.
