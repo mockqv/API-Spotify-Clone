@@ -10,7 +10,6 @@ import Artist from "../../interfaces/Artist/Artist";
 
 export default async function addArtistModel(artist: Artist): Promise<string> {
   try {
-    // Adiciona o artista à coleção 'artists'
     const artistRef = await addDoc(collection(db, "artists"), artist);
 
     return artistRef.id;
