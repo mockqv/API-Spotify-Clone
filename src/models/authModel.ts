@@ -1,5 +1,6 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, } from "firebase/auth";
-import { auth } from "../../database/firebaseConfig";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { auth, db } from "../../database/firebaseConfig";
 import User from "../interfaces/User";
 
 /**
@@ -9,27 +10,39 @@ import User from "../interfaces/User";
  */
 export const signInWithEmailModel = async (user: User): Promise<any> => {
   try {
-    // Attempts to sign in the user using the provided email and password
     const data = await signInWithEmailAndPassword(auth, user.email, user.password.toString());
-    return data;  // Returns the sign-in data, such as the authenticated user
+    return data;
   } catch (err) {
-    // If an error occurs, returns the error
     return err;
   }
 };
 
 /**
- * Function for signing up a new user with email and password.
+ * Function for signing up a new user and storing their details in Firestore.
  * @param { User } user - The user object containing the email and password
- * @returns { Promise<any> } - Resolves with the sign-up data or an error
+ * @returns { Promise<any> } - Resolves with the user data or an error
  */
 export const signUpWithEmailModel = async (user: User): Promise<any> => {
   try {
-    // Attempts to create a new user with the provided email and password
-    const data = createUserWithEmailAndPassword(auth, user.email, user.password);
-    return data;  // Returns the sign-up data, such as the newly created user
+    // Cria um novo usuário no Authentication
+    const userCredential = await createUserWithEmailAndPassword(auth, user.email, user.password);
+    
+    // Obtém o UID do usuário recém-criado
+    const uid = userCredential.user.uid;
+
+    // Define os dados iniciais do usuário no Firestore
+    const userData = {
+      nome: uid,  // Nome padrão sendo o UID do usuário
+      email: user.email,
+      photo: "",  // Foto padrão vazia
+      createdAt: serverTimestamp() // Timestamp do momento da criação
+    };
+
+    // Salva os dados na coleção "users" com o UID como nome do documento
+    await setDoc(doc(db, "users", uid), userData);
+
+    return userCredential;
   } catch (err) {
-    // If an error occurs, returns the error
     return err;
   }
 };
