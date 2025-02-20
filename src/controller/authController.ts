@@ -1,5 +1,5 @@
 import User from "../interfaces/User";
-import { signInWithEmailModel, signUpWithEmailModel } from "../models/authModel";
+import { getUserByIdModel, signInWithEmailModel, signUpWithEmailModel } from "../models/authModel";
 import { Request, Response } from "express";
 
 /**
@@ -33,7 +33,7 @@ export async function signInWithEmailController(req: Request<any, any, User>, re
  * @param { Response } res - The HTTP response object
  * @returns { Promise<any> } - Resolves with a response containing the sign-up data or an error message
  */
-export async function signUpWithEmailController(req: Request<any, any, User>, res: Response): Promise<any> {
+export async function signUpWithEmailController(req: Request, res: Response): Promise<any> {
   const content: User = req.body;
   
   try {
@@ -51,3 +51,30 @@ export async function signUpWithEmailController(req: Request<any, any, User>, re
     });
   }
 }
+
+/**
+ * Controller to fetch a user document from the "users" collection based on the given ID.
+ * @param {Request} req - The HTTP request object containing the user ID as a route parameter.
+ * @param {Response} res - The HTTP response object.
+ * @returns {Promise<Response>} - Resolves with a response containing the user document data or an error message.
+ */
+
+export async function getUserByIdController(req: Request, res: Response): Promise<any> {
+  const { id } = req.body;
+
+  try {
+    // Calls the model function to fetch the user document
+    const userData = await getUserByIdModel(id);
+
+    // If user data is found, return it in the response
+    if (userData) {
+      return res.status(200).json(userData);
+    }
+
+    // If no user is found, return a 404 response
+    return res.status(404).json({ message: "User not found" });
+  } catch (error) {
+    // Sends an error response if something goes wrong
+    return res.status(500).json({ message: "Internal server error", error });
+  }
+};
