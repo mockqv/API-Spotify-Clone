@@ -24,9 +24,9 @@ export const searchItemsModel = async (name: string): Promise<any> => {
     const playlistsSnapshot = await getDocs(playlistsQuery);
     const songsSnapshot = await getDocs(songsQuery);
 
-    const artists = artistsSnapshot.docs.map(doc => doc.data() as Artist);
-    const playlists = playlistsSnapshot.docs.map(doc => doc.data() as Playlist);
-    const songs = songsSnapshot.docs.map(doc => doc.data() as Song);
+    const artists = artistsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Artist));
+    const playlists = playlistsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Playlist));
+    const songs = songsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Song));
 
     return { artists, playlists, songs };
   } catch (err) {

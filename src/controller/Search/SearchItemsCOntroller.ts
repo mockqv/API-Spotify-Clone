@@ -9,7 +9,7 @@ import { searchItemsModel } from "../../models/Search/SearchItemsModel";
  * @returns { Promise<any> } - Resolves with a response containing the search results or an error message
  */
 
-export async function searchItemsController(req: Request, res: Response): Promise<any> {
+export default async function searchItemsController(req: Request, res: Response): Promise<any> {
   const { name } = req.query;
 
   if (typeof name !== 'string') {
@@ -24,9 +24,7 @@ export async function searchItemsController(req: Request, res: Response): Promis
 
 
     if (!results.artists.length && !results.playlists.length && !results.songs.length) {
-      return res.status(404).json({
-        message: "No items found matching the provided name."
-      });
+      return res.status(200);
     }
 
 

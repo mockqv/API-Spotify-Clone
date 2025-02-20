@@ -1,6 +1,5 @@
 import express, { Express } from "express";
-import { searchItemsController } from "../controller/Search/SearchItemsCOntroller";
-
+import searchItemsController from "../controller/Search/SearchItemsController";
 
 
 
