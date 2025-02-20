@@ -7,7 +7,7 @@ const routes = ( app: Express ) => {
 
     app.post("/login", signInWithEmailController);
     app.post("/register", signUpWithEmailController);
-    app.get("/getUserId", getUserByIdController);
+    app.get("/getUserId/:id", getUserByIdController);
 };
 
 export default routes;

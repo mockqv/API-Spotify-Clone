@@ -60,7 +60,7 @@ export async function signUpWithEmailController(req: Request, res: Response): Pr
  */
 
 export async function getUserByIdController(req: Request, res: Response): Promise<any> {
-  const { id } = req.body;
+  const { id } = req.params;
 
   try {
     // Calls the model function to fetch the user document
