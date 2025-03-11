@@ -1,5 +1,5 @@
 import express, { Express } from "express";
-import { getUserByIdController, signInWithEmailController, signUpWithEmailController } from "../controller/authController";
+import { getUserByIdController, signInWithEmailController, signUpWithEmailController, updateUserController } from "../controller/authController";
 
 
 const routes = ( app: Express ) => {
@@ -8,6 +8,7 @@ const routes = ( app: Express ) => {
     app.post("/login", signInWithEmailController);
     app.post("/register", signUpWithEmailController);
     app.get("/getUserId/:id", getUserByIdController);
+    app.patch("/updateUser/", updateUserController);
 };
 
 export default routes;

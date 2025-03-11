@@ -1,5 +1,5 @@
 import User from "../interfaces/User";
-import { getUserByIdModel, signInWithEmailModel, signUpWithEmailModel } from "../models/authModel";
+import { getUserByIdModel, signInWithEmailModel, signUpWithEmailModel, updateUserByIdModel } from "../models/authModel";
 import { Request, Response } from "express";
 
 /**
@@ -78,3 +78,34 @@ export async function getUserByIdController(req: Request, res: Response): Promis
     return res.status(500).json({ message: "Internal server error", error });
   }
 };
+
+/**
+ * Controller for updating user data.
+ * @param { Request<any, any, { id: string, name: string, photo: string }> } req - The HTTP request object containing the user data
+ * @param { Response } res - The HTTP response object
+ * @returns { Promise<any> } - Resolves with a response containing the update status or an error message
+ */
+export async function updateUserController(req: Request, res: Response): Promise<any> {
+  const { id, name, photo } = req.body;
+
+  try {
+    // Calls the updateUserByIdModel function to update the user data
+    const success = await updateUserByIdModel({ id, name, photo });
+
+    if (!success) {
+      return res.status(400).json({
+        message: "Failed to update user data. Please check the provided ID.",
+      });
+    }
+
+    // Sends a successful response
+    return res.status(200).json({
+      message: "User updated successfully!",
+    });
+  } catch (err) {
+    // Sends an error response if something goes wrong
+    return res.status(500).json({
+      message: err|| "Internal server error",
+    });
+  }
+}
