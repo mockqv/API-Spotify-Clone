@@ -18,5 +18,5 @@ playlistRoutes(app);
 searchRoutes(app);
 
 app.listen(PORT, () => {
-  console.log(`Server escutando na porta ${PORT}`);
+  console.log(`Server listening on port ${PORT}`);
 });

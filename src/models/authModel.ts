@@ -1,8 +1,10 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc, serverTimestamp, getDoc, collection, where, getDocs, updateDoc } from "firebase/firestore";
+import { doc, setDoc, serverTimestamp, getDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../database/firebaseConfig";
 import User from "../interfaces/User";
-import { query } from "express";
+import supabase from "../../database/supabaseConfig";
+import { decode } from "base64-arraybuffer";
+import * as fs from "fs"
 
 /**
  * Function for signing in a user with email and password.
@@ -100,22 +102,59 @@ export const updateUserByIdModel = async ({
   photo: string;
 }): Promise<boolean> => {
   try {
-    if (!id) {
-      throw new Error("ID is required.");
+    if (!id) throw new Error("❌ ID is required.");
+    if (!db) throw new Error("❌ Firestore is not configured correctly.");
+
+    if (photo.startsWith("http")) {
+
+      const docRef = doc(db, "users", id);
+      await updateDoc(docRef, { name, photo });
+
+      return true;
     }
 
-    if (!db) {
-      throw new Error("Firestore instance is not configured properly.");
+    if (photo.startsWith("data:image")) {
+
+      const fileType = photo.substring(photo.indexOf(":") + 1, photo.indexOf(";"));
+      const fileExtension = fileType.split("/")[1];
+
+      const base64Data = photo.split(",")[1];
+      const byteCharacters = atob(base64Data);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const fileBlob = new Blob([byteArray], { type: fileType });
+
+      const fileName = `${id}-${Date.now()}.${fileExtension}`;
+
+      const { data, error: uploadError } = await supabase.storage
+        .from("ProfilePhotos")
+        .upload(fileName, fileBlob, { contentType: fileType, upsert: true });
+
+      if (uploadError) {
+        throw new Error(`Erro ao fazer upload da imagem: ${uploadError.message}`);
+      }
+
+      const { data: publicUrlData } = supabase.storage.from("ProfilePhotos").getPublicUrl(fileName);
+      const publicUrl = publicUrlData.publicUrl;
+
+      if (!publicUrl) {
+        throw new Error("URL don't found.");
+      }
+
+      console.log("📌 Image URL:", publicUrl);
+
+      const docRef = doc(db, "users", id);
+      await updateDoc(docRef, { name, photo: publicUrl });
+
+      return true;
     }
 
-    const docRef = doc(db, "users", id);
-
-    await updateDoc(docRef, {
-      name,
-      photo,
-    });
-    return true;
+    throw new Error("❌ Unknown image format.");
   } catch (error) {
+    console.error("❌ Error at trying to update user:", error);
     return false;
   }
 };

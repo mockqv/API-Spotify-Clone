@@ -89,7 +89,6 @@ export async function updateUserController(req: Request, res: Response): Promise
   const { id, name, photo } = req.body;
 
   try {
-    // Calls the updateUserByIdModel function to update the user data
     const success = await updateUserByIdModel({ id, name, photo });
 
     if (!success) {

@@ -8,7 +8,7 @@ const routes = ( app: Express ) => {
     app.post("/login", signInWithEmailController);
     app.post("/register", signUpWithEmailController);
     app.get("/getUserId/:id", getUserByIdController);
-    app.patch("/updateUser/", updateUserController);
+    app.patch("/updateUser", updateUserController);
 };
 
 export default routes;
