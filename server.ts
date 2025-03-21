@@ -6,7 +6,6 @@ import songsRoutes from "./src/routes/songsRoutes";
 import playlistRoutes from "./src/routes/playlistsRoutes";
 import searchRoutes from "./src/routes/searchRoutes";
 
-
 dotenv.config();
 
 const app = express();

@@ -9,3 +9,6 @@
 
 #FirebaseConfig file
 \database/firebaseConfig.ts
+
+#SupabaseConfig file
+\database/supabaseConfig.ts
